@@ -1,0 +1,104 @@
+# DESAFIO: Modelo Relacional Funcionários
+
+---
+
+## 1. Objetivo
+Descrever o modelo relacional para um sistema que registra funcionários, departamentos, empresas contratantes, empreitadas e as atribuições dos funcionários nas empreitadas. Entregar a especificação textual do modelo relacional e a instância dos dados (tabelas com exemplos).
+
+---
+
+## 2. Visão Geral do Sistema
+- Cada **funcionário** possui `nome` e `email` e pode pertencer a um ou mais **departamentos** (relação M:N).
+- Cada **empreitada** possui `data_inicio` e `data_fim`, é contratada por uma **empresa contratante** (1:N) e pode ter vários funcionários atribuídos (M:N).
+- Cada atribuição (funcionário ↔ empreitada) armazena `horas` e `valor_hora`.
+
+---
+
+## 3. Especificação Textual do Modelo Relacional
+
+**EMPRESA_CONTRATANTE**  
+- `empresa_id` (PK) : INT  
+- `nome` : VARCHAR(100)  
+- `telefone` : VARCHAR(20)
+
+**DEPARTAMENTO**  
+- `departamento_id` (PK) : INT  
+- `nome` : VARCHAR(60)
+
+**FUNCIONARIO**  
+- `funcionario_id` (PK) : INT  
+- `nome` : VARCHAR(100)  
+- `email` : VARCHAR(100) — UNIQUE
+
+**FUNCIONARIO_DEPARTAMENTO**  *(associação M:N)*  
+- `funcionario_id` (FK) → FUNCIONARIO(funcionario_id)  
+- `departamento_id` (FK) → DEPARTAMENTO(departamento_id)  
+- PK composta: (`funcionario_id`, `departamento_id`)
+
+**EMPREITADA**  
+- `empreitada_id` (PK) : INT  
+- `empresa_id` (FK) → EMPRESA_CONTRATANTE(empresa_id)  
+- `data_inicio` : DATE  
+- `data_fim` : DATE (pode ser NULL)
+
+**ATRIBUICAO**  *(associação M:N com atributos)*  
+- `empreitada_id` (FK) → EMPREITADA(empreitada_id)  
+- `funcionario_id` (FK) → FUNCIONARIO(funcionario_id)  
+- `horas` : DECIMAL(10,2)  
+- `valor_hora` : DECIMAL(10,2)  
+- PK composta: (`empreitada_id`, `funcionario_id`)
+
+---
+
+## 4. Instância de Dados
+
+### EMPRESA_CONTRATANTE
+| empresa_id | nome                        | telefone       |
+|-----------:|-----------------------------|----------------|
+|     1      | Construtora Horizonte Ltda  | (11) 9988-2201 |
+|     2      | Engenharia Ponto Firme S.A  | (21) 9755-1203 |
+|     3      | Estrutural ProService Ltda  | (31) 9881-5533 |
+
+### DEPARTAMENTO
+| departamento_id | nome            |
+|----------------:|-----------------|
+|        1        | Engenharia Civil|
+|        2        | Recursos Humanos|
+|        3        | Financeiro      |
+|        4        | Logística       |
+
+### FUNCIONARIO
+| funcionario_id | nome               | email                         |
+|---------------:|--------------------|-------------------------------|
+|       1        | Ana Beatriz Souza  | ana.souza@empresa.com         |
+|       2        | Bruno Oliveira     | bruno.oliveira@empresa.com    |
+|       3        | Carla Mendes       | carla.mendes@empresa.com      |
+|       4        | Diego Pereira      | diego.pereira@empresa.com     |
+|       5        | Elisa Martins      | elisa.martins@empresa.com     |
+
+### FUNCIONARIO_DEPARTAMENTO
+| funcionario_id | departamento_id |
+|---------------:|-----------------|
+|       1        |        1        |
+|       1        |        4        |
+|       2        |        1        |
+|       3        |        2        |
+|       4        |        3        |
+|       5        |        4        |
+
+### EMPREITADA
+| empreitada_id | empresa_id | data_inicio | data_fim |
+|--------------:|-----------:|------------:|---------:|
+|      101      |      1     | 2025-02-01  |2025-06-30|
+|      102      |      2     | 2025-03-15  |2025-08-20|
+|      103      |      3     | 2025-05-10  |NULL      |
+
+### ATRIBUICAO
+| empreitada_id | funcionario_id | horas  | valor_hora |
+|--------------:|---------------:|-------:|-----------:|
+|      101      |        1       |160.00  |55.00       |
+|      101      |        2       |140.00  |50.00       |
+|      102      |        1       |100.00  |58.00       |
+|      102      |        3       |120.00  |45.00       |
+|      103      |        4       |90.00   |60.00       |
+|      103      |        5       |110.00  |40.00       |
