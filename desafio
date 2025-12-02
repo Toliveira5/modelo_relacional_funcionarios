@@ -1,18 +1,13 @@
 # DESAFIO: Modelo Relacional Funcionários
 
----
-
 ## 1. Objetivo
-Descrever o modelo relacional para um sistema que registra funcionários, departamentos, empresas contratantes, empreitadas e as atribuições dos funcionários nas empreitadas. Entregar a especificação textual do modelo relacional e a instância dos dados (tabelas com exemplos).
-
----
+Descrever o modelo relacional para um sistema que registra funcionários, departamentos, empresas contratantes, empreitadas e as atribuições dos funcionários nas empreitadas. 
+Entregar a especificação textual do modelo relacional e a instância dos dados.
 
 ## 2. Visão Geral do Sistema
-- Cada **funcionário** possui `nome` e `email` e pode pertencer a um ou mais **departamentos** (relação M:N).
-- Cada **empreitada** possui `data_inicio` e `data_fim`, é contratada por uma **empresa contratante** (1:N) e pode ter vários funcionários atribuídos (M:N).
+- Cada funcionário possui `nome` e `email` e pode pertencer a um ou mais departamentos (relação M:N).
+- Cada empreitada possui `data_inicio` e `data_fim`, é contratada por uma empresa contratante (1:N) e pode ter vários funcionários atribuídos (M:N).
 - Cada atribuição (funcionário ↔ empreitada) armazena `horas` e `valor_hora`.
-
----
 
 ## 3. Especificação Textual do Modelo Relacional
 
@@ -48,7 +43,6 @@ Descrever o modelo relacional para um sistema que registra funcionários, depart
 - `valor_hora` : DECIMAL(10,2)  
 - PK composta: (`empreitada_id`, `funcionario_id`)
 
----
 
 ## 4. Instância de Dados
 
